@@ -1,0 +1,1 @@
+# fsp-salepoint-info-service
