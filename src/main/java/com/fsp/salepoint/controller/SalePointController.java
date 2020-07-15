@@ -73,6 +73,12 @@ public class SalePointController {
 		salepointrepository.deleteById(id);
 	}
 
+	@PutMapping("/{id}/rating")
+	private void setRating(@RequestBody Float rating, @PathVariable Long id){
+		salepointrepository.getOne(id).setRating(rating);
+		salepointrepository.saveAndFlush(salepointrepository.getOne(id));
+	}
+
 	@PutMapping("/{id}")
 	private ResponseEntity<SalePoint> updateSalePoint(@RequestBody SalePoint newSalePoint, @PathVariable Long id) {
 
@@ -86,7 +92,7 @@ public class SalePointController {
 					}
 
 					if (jsonObj.has("ranking"))
-						salepoint.setRanking(jsonObj.getFloat("ranking"));
+						salepoint.setRating(jsonObj.getFloat("ranking"));
 
 					if (jsonObj.has("photo"))
 						salepoint.setPhoto(jsonObj.getString("photo"));

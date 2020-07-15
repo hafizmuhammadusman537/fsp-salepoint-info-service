@@ -25,7 +25,7 @@ public class SalePoint {
 	private Timestamp confirmedAt;
 
 	@Column(name = "SALEPOINT_RANKING")
-	private Float ranking;
+	private Float rating;
 
 	@Column(name = "SALEPOINT_PHOTO")
 	private String photo;
@@ -55,13 +55,13 @@ public class SalePoint {
 	public SalePoint() {
 	}
 
-	public SalePoint(String name, Float deliveryAreaDistance, Timestamp registeredAt, Timestamp confirmedAt, Float ranking, String photo, String description, Long salePointOwner, Character isActive, Long modifiedBy, String modifiedWhen, String modifiedWorkstation, Address address)
+	public SalePoint(String name, Float deliveryAreaDistance, Timestamp registeredAt, Timestamp confirmedAt, Float rating, String photo, String description, Long salePointOwner, Character isActive, Long modifiedBy, String modifiedWhen, String modifiedWorkstation, Address address)
 	{
 		this.name = name;
 		this.deliveryAreaDistance = deliveryAreaDistance;
 		this.registeredAt = registeredAt;
 		this.confirmedAt = confirmedAt;
-		this.ranking = ranking;
+		this.rating = rating;
 		this.photo = photo;
 		this.description = description;
 		this.salePointOwner = salePointOwner;
@@ -122,14 +122,14 @@ public class SalePoint {
 		this.confirmedAt = confirmedAt;
 	}
 
-	public Float getRanking()
+	public Float getRating()
 	{
-		return ranking;
+		return rating;
 	}
 
-	public void setRanking(Float ranking)
+	public void setRating(Float rating)
 	{
-		this.ranking = ranking;
+		this.rating = rating;
 	}
 
 	public String getPhoto()
