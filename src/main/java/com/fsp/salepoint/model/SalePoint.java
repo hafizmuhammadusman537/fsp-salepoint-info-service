@@ -33,6 +33,7 @@ public class SalePoint {
 	@Column(name = "SALEPOINT_DESCRIPTION")
 	private String description;
 
+
 	@Column(name = "SALEPOINTOWNER_ID")
 	private Long salePointOwner;
 
