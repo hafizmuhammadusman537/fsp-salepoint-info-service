@@ -44,9 +44,13 @@ public class SalePointController {
 	}
 
 	@GetMapping("/users/{ownerId}")
-	private SalePoint getSalePointByUser(@PathVariable Long ownerId)
+	private ResponseEntity<SalePoint> getSalePointByUser(@PathVariable Long ownerId)
 	{
-		return salepointrepository.findBySalePointOwner(ownerId);
+		return salepointrepository.findBySalePointOwnerAndIsActive(ownerId, 'y').map(
+		        salepoint->{
+                        return ResponseEntity.ok(salepoint);
+                }
+        ).orElseThrow(()-> new ResourceNotFoundException("SalePoint Not found"));
 	}
 
 	// returns all salepoints by getting city
@@ -75,8 +79,10 @@ public class SalePointController {
 
 	@PutMapping("/{id}/rating")
 	private void setRating(@RequestBody Float rating, @PathVariable Long id){
-		salepointrepository.getOne(id).setRating(rating);
-		salepointrepository.saveAndFlush(salepointrepository.getOne(id));
+        System.out.println("sp rating =========: " + rating);
+		salepointrepository.findById(id).get().setRanking(rating);
+		salepointrepository.flush();
+		// salepointrepository.saveAndFlush(salepointrepository.getOne(id));
 	}
 
 	@PutMapping("/{id}")
@@ -92,7 +98,7 @@ public class SalePointController {
 					}
 
 					if (jsonObj.has("ranking"))
-						salepoint.setRating(jsonObj.getFloat("ranking"));
+						salepoint.setRanking(jsonObj.getFloat("ranking"));
 
 					if (jsonObj.has("photo"))
 						salepoint.setPhoto(jsonObj.getString("photo"));
@@ -152,5 +158,17 @@ public class SalePointController {
 					return ResponseEntity.ok(salepointrepository.findById(id).get());
 
 				}).orElseThrow(()-> new ResourceNotFoundException("SalePoint Not found for this id:: " + id));
+	}
+
+    @GetMapping("/salepointCount")
+    int getSalePointCount(){
+        return salepointrepository.countActiveSalePoints();
+	}
+	
+	@PutMapping("/{id}/status")
+	private void setStatus(@RequestBody String status, @PathVariable Long id){
+		System.out.println("character==========>  :"+status.charAt(0));
+		salepointrepository.getOne(id).setIsActive(status.charAt(0));
+		salepointrepository.flush();
 	}
 }
