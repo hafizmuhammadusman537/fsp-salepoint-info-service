@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface SalePointRepository extends JpaRepository<SalePoint, Long>{
     Optional<SalePoint> findBySalePointOwnerAndIsActive(Long userId, Character ch);
+    Optional<SalePoint> findBySalePointOwner(Long userId);
 
     List<SalePoint> findByAddressCity(String city);
 
